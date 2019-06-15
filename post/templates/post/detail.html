@@ -1,0 +1,95 @@
+{% extends 'post/base.html' %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{{post.title}} <small><span style='{color:grey;}'> - {{post.user}} </span></small>
+{% if flag %}
+<span style="font-size: 12px;">
+	&nbsp;&nbsp;<a href="{% url 'post:post-update' post.id %}">update</a>
+	&nbsp;&nbsp;<a href="{% url 'post:post-delete' post.id %}">delete</a>
+	&nbsp;&nbsp;<a href="{% url 'post:post-home' %}">Go Back</a>
+</span>
+{% endif %}
+<br><br><div class="align_center">
+<img src="{{post.image.url}}" class="img-fluid">
+<br><br></div>
+{{post.content}}
+<br>
+
+<span class="float_right">
+	<small>
+		views : {{post.views}}&nbsp;&nbsp;&nbsp;
+		comment : {{post.comment_count}}
+	</small>
+</span>
+<br>
+<hr>
+
+{% if user.is_authenticated %}
+<br>
+<form method="GET" action="" id="commentForm" comment_post_url="{% url 'post:post-comment' post.id%}">
+	{% crispy form%}
+</form>
+
+{% else %}
+	<div class="align_center">To add your comment,Please Login First</div>
+{% endif%}
+
+<div id='CommentBlock' comment_url="{% url 'post:get-comments' post.id %}"></div>
+
+{% endblock %}
+
+
+{% block Script %}
+<script type="text/javascript" src='{% static "post/ajax.js" %}'></script>
+
+<script type="text/javascript">
+	
+form=$("#commentForm");
+form.submit(function(e){
+	e.preventDefault();
+	$FormData=form.serialize();
+	console.log($FormData);
+	$.ajax({
+			method:form.attr('method'),
+			url:form.attr('comment_post_url'),
+			data:$FormData,
+			contentType:'application/json',
+			dataType:'json',
+			success:function(data){
+				console.log('comment Has been Posted')
+			}
+		});
+	$('#id_comment_text').val("");
+})
+
+comment_block=$('#CommentBlock');
+
+setInterval(function(){
+$.ajax({
+	method:'GET',
+	url:comment_block.attr('comment_url'),
+	contentType:'application/json',
+	dataType:'json',
+	success:function(data){
+		console.log(data);
+		for(var key in data.comments){
+			if(key==0){
+				comment_block.html('<img src="'+data.comments[key].image+'" height="40px" width="40px" style="border-radius: 50px;margin-bottom: 5px">&nbsp;&nbsp;');
+			}else{
+				comment_block.append('<img src="'+data.comments[key].image+'" height="40px" width="40px" style="border-radius: 50px;margin-bottom: 5px">&nbsp;&nbsp;');
+			}
+			comment_block.append('<span class="comment_username">'+data.comments[key].username+'</span>'+data.comments[key].comment+'<br>');
+		};
+	}
+})
+
+},1000);
+
+</script>
+
+
+{% endblock %}

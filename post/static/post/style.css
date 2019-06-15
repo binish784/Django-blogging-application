@@ -1,0 +1,114 @@
+.index-profilePic{
+	height: 75px;
+	width:75px;
+	border-radius: 50px;
+}
+
+.no_margin{
+	margin: 0px;
+}
+
+.btn_blue_custom{
+	background-color: #444e73;
+	color:white;
+}
+
+.btn_blue_custom:hover{
+	background-color:#094582;
+	color: white;
+	border:1px solid #312121;
+}
+
+.nav_custom{
+	background-color:#35404c!important
+}
+
+.btn-default{
+	background-color: white;
+}
+
+.btn-default:hover{
+	background-color: #ccc6c6;
+}
+
+.white_background{
+	background-color: white;
+}
+
+.padding_10{
+	padding: 10px;
+}
+
+.padding_5{
+	padding: 5px;
+}
+
+.float_right{
+	float: right;
+}
+
+
+.color_forest{
+	color: forestgreen;
+}
+.note{
+	background-color: #f5efb8;
+	padding: 10px;
+}
+
+.comment_username{
+	font-size: 15px;
+	color: dodgerblue;
+}
+
+.align_center{
+	text-align: center;
+}
+
+.align_right{
+	text-align: right;
+}
+
+.margin_auto{
+	margin:auto;
+}
+
+.whitesmoke_background{
+	background-color: whitesmoke;
+}
+
+
+.footer_custom{
+	background-color: #21233c;
+}
+
+.color_white{
+	color: white;
+}
+
+.color_khaki{
+	color: khaki;
+}
+
+.header{
+	background-color: #caccd0;
+	color:black;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+.side_link_magenta{
+	border-left: 2px solid #9fa0ff;
+}
+
+.side_link_magenta:hover{
+	border-left: 2px solid magenta;
+}
+
+.side_link_forest{
+	border-left: 2px solid #9fa0ff;
+}
+
+.side_link_forest:hover{
+	border-left: 2px solid forestgreen;
+}

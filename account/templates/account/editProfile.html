@@ -1,0 +1,41 @@
+{% extends 'post/base.html' %}
+
+{% load crispy_forms_tags%}
+
+{% block content %}
+
+<form method="POST" action="" enctype="multipart/form-data">
+{% csrf_token%}
+
+	{{userform.username|as_crispy_field}}
+
+<div class="row">
+	<div class="col-md-4">
+		    	{{userform.first_name|as_crispy_field}}
+	</div>
+	<div class="col-md-4">
+		    	{{userform.last_name|as_crispy_field}} 	
+	</div>
+	<div class="col-md-4">
+		    	{{userform.email|as_crispy_field}}
+		<br>
+	</div>
+</div>
+
+
+
+
+<div class="row">
+	<div class="col-md-3">
+		Current Profile Picture<br>
+		<img src="{{user.profile.image.url}}" height="200px" width="200px"></div>
+	<div class="col-md-4">
+		{{profileform|crispy}}<br>
+	</div>
+</div>
+<br>
+<input type="submit" value="Update Profile" class="btn btn-primary">
+<a href="{% url 'account:account-profile' user.id %}" class="btn btn-default">Go Back</a>
+</form>
+	
+{% endblock content %}	

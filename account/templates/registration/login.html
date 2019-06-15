@@ -1,0 +1,30 @@
+{% extends 'post/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content%}
+
+
+<div class="row">
+	<div class="col-md-3 ">
+		<form method="POST" action="" style="border-right: 2px solid #007bff;padding-right: 20px;"> 
+			{% csrf_token %}
+			{{form|crispy}}
+			<small>
+				<a href="{% url 'account:register' %}">
+					Register an account 
+				</a>
+			</small>
+			<br><br>
+			<input type="submit" value='Login' class="btn btn_blue_custom">
+		</form>
+	</div>
+	<div class="col-md-9">
+		<div>
+			<div class=""></div>
+			<div class=""></div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,61 @@
+{% extends 'post/base.html' %}
+
+
+{% block content %}
+
+	<div class="row">
+		<div class="col-md-8">
+			<div class="row">
+				<div class="col-md-3">
+					Recent Activities :
+				</div>
+				<div class="col-md-3 offset-md-6">
+					<small><a href="{% url 'post:post-home' %}">Go back</a></small>
+				</div>
+			</div>
+			<br>
+			{% if posts %}
+
+			{% for post in posts %}
+			<p style='color:#007bff'>
+				<div class="row">
+				<div class="col-md-11">
+					<a href="{% url 'post:post-detail' post.slug %}">{{post.title}}</a>
+					<br>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					{{post.content|slice:":100"}} ...<br>
+					<a href="" class="float_right">Comment : {{post.comment_count}}</a>
+				</div>
+				</div><br>
+			</p>
+			{% endfor %}
+
+			{% else %}
+				<p>No Posts Yet</p>
+			{% endif %}
+		</div>
+		<div class="col-md-4 ">
+			Profile Information:<br>
+			<small><a href="{% url 'account:edit_user_profile' user.id %}">Edit</a></small><br>
+			<br>
+			<img src="{{user.profile.image.url}}" height="100px" width="100px">
+			<br>
+
+			<br>
+			Username : {{user.username}}<br><br>
+			{% if user.first_name %}
+				{% if user.last_name %}
+					Fullname : {{user.first_name}} {{user.last_name}}
+				{% else %}
+					Firstname : {{user.first_name}}
+				{% endif %}
+			<br><br>
+			{% endif %}
+
+			{% if user.email %}
+				Email : {{user.email}}
+			{% endif%}
+		</div>
+
+	</div><br>
+{% endblock %}

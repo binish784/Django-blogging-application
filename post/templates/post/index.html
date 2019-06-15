@@ -1,0 +1,207 @@
+{% extends 'post/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row">
+
+	<div class="col-md-7 index-blogPart" >
+
+		<div class="note">
+			<div class="container-fluid">
+				<div class="row">
+					Welcome to Blog-IT, This is an mini project in my journey to learn django. Hope you like it !
+				</div>
+			</div>
+		</div>
+		
+
+	{% if latest_pinned %}
+
+	<br><br>
+	Pinned Post : <br><br>
+
+	<div class="white_background padding_10">
+		<div class="container-fluid">
+				<div class="row">
+				<div class="col-md-2">
+						<img src="{{latest_pinned.user.profile.image.url}}" class="index-profilePic" >
+				</div>
+				<div class="col-md-10">
+					<div class="container-fluid" >
+					<div class="row">
+						<div class="col-md-8">
+							<a href="{% url 'post:post-detail' latest_pinned.slug %}">{{latest_pinned.title|slice:":20"}}</a>
+							<small style="color:grey">- {{latest_pinned.user}}</small>
+						</div>
+					</div>
+					</div>
+					<img src="{{latest_pinned.image.url}}" height="200px" width=400px" class="align_center padding_10 margin_auto">
+					<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					{{latest_pinned.content|slice:":100"}} ...
+					<br>
+					<a href="" class="color_forest"><small class="float_right">Comments : {{latest_pinned.comment_count}}</small></a>
+				</div>
+				</div>
+				</div>
+	</div>
+	<a href="{% url 'post:post-pinned' %}"><small class='float_right'>See more </small></a>
+	{% endif %}
+
+	<br><br>
+		Blog-IT Activities:<br><br>
+
+		{% if posts %}
+			{% for post in posts %}
+			<p style='color:#007bff'>
+				<div class="container-fluid">
+				<div class="row  whitesmoke_background padding_10">
+				<div class="col-md-2">
+						<img src="{{post.user.profile.image.url}}" class="index-profilePic" >
+				</div>
+				<div class="col-md-10">
+					<div class="container-fluid" >
+					<div class="row">
+						<div class="col-md-8">
+							<a href="{% url 'post:post-detail' post.slug %}">{{post.title|slice:":20"}}</a>
+							<small style="color:grey">- {{post.user}}</small>
+						</div>
+						{% if user.is_authenticated %}
+						<div class="col-md-2 offset-md-2">
+							{% if post.pin %}
+								<small><a href="{% url 'post:post-pin' post.id %}">Pinned</a></small>
+							{% else %}
+								<small><a href="{% url 'post:post-pin' post.id %}">Pin</a></small>
+							{% endif %}
+						</div>
+						{% endif %}
+					</div>
+					</div>
+						<img src="{{post.image.url}}" height="200px" width=400px" class="align_center padding_10 margin_auto"><br>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{post.content|slice:":100"}} ...
+					<a href="" class="color_forest"><small class="float_right">Comments : {{post.comment_count}}</small></a>
+				</div>
+				</div>
+				</div><br>
+			</p>
+			{% endfor %}
+		{% else %}
+			<p style="text-align: center;">Be the first to Post ...</p>
+		{% endif %}
+
+<br>
+<!--Paginator buttons  	-->
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 padding-10 ">
+				<div class="pagination">
+					<span class="step-links">
+					{% if posts.has_previous %}
+						<a href="?page=1" class="btn btn-dark btn-sm margin-5">&laquo; First</a>
+						<a href="?page={{posts.previous_page_number}}" class="btn btn-dark btn-sm margin-5">Prev</a>
+					{% else %}
+						<a href="#" class="btn btn-light btn-sm disabled margin-5">&laquo; First</a>
+						<a href="#" class="btn btn-light btn-sm disabled margin-5">Prev</a>
+					{% endif %}
+					</span>
+				
+					<span class="current btn btn-light margin-5">
+					Page {{posts.number}} of {{posts.paginator.num_pages}}
+					</span>
+					
+					<span class="step-links">
+					{% if posts.has_next %}
+						<a href="?page={{posts.next_page_number}}" class="btn btn-dark btn-sm margin-5">Next</a>
+						<a href="?page={{posts.paginator.num_pages}}" class="btn btn-dark btn-sm margin-5">&raquo; Last</a>
+					{% else %}
+						<a href="#" class="btn btn-light disabled btn-sm">Next</a>
+						<a href="#" class="btn btn-light disabled btn-sm">&raquo; Last</a>
+					{% endif %}
+					</span>
+				</div>	
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	</div>
+	
+	
+	<!-- side main page section -->
+	<div class="col-md-4 offset-md-1">
+		
+		
+		<!-- Recent Post section -->
+		
+		<div class="header">
+			Recent Posts
+		</div>
+
+		{% if recents %}
+		{% for recent in recents %}
+			<div class="side_link_magenta">
+				<a href="{% url 'post:post-detail' recent.slug%}">
+					<div style="margin-left: 15px;">{{recent.title}}</div>
+				</a>	
+			</div>
+			<hr>
+		{% endfor %}
+
+		{% else %}
+		<br>
+			No recent Posts
+		<br>
+		{% endif %}
+	<br>
+		<!-- Most viewed section -->
+		
+		<div class="header">
+			Most Viewed
+		</div>
+
+		{% if most_views %}
+
+		{% for popular in most_views %}
+			<div class="side_link_forest">
+				<a href="{% url 'post:post-detail' popular.slug %}">
+					<div style="margin-left: 15px">{{popular.title}}
+					</div>
+				</a>
+			</div><hr>
+		{% endfor %}
+		<br>
+		{% else %}
+
+		<br>
+			No posts yet
+		<br>
+
+		{% endif %}
+
+		{% if rand_post %}
+		<!-- Random Post section -->
+
+		<div class="header">
+			Random Post
+		</div>
+		<a href="{% url 'post:post-detail' rand_post.slug %}">{{rand_post.title}}<div class="align_center"><br>
+			<img src="{{rand_post.image.url}}" height="200px" width="300px">
+		</div></a><br>
+
+		{% endif %}
+
+	</div>
+
+
+
+
+</div>
+
+
+
+{% endblock content %}

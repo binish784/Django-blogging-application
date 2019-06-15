@@ -1,0 +1,38 @@
+{% extends 'post/base.html' %}
+
+{% block content %}
+{% for post in pinned_posts %}
+<p style='color:#007bff'>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-2">
+							<img src="{{post.user.profile.image.url}}" class="index-profilePic" >
+						</div>
+						<div class="col-md-10">
+							<div class="container-fluid" >
+								<div class="row">
+									<div class="col-md-8">
+										<a href="{% url 'post:post-detail' post.id %}">{{post.title|slice:":20"}}</a>
+										<small style="color:grey">- {{post.user}}</small>
+									</div>
+									<div class="col-md-2 offset-md-2">
+										<small><a href="{% url 'post:post-pin' post.id %}">Pinned</a></small>
+									</div>
+								</div>
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{post.content|slice:":100"}} ...
+						</div>
+					</div>
+				</div>		
+			</div>
+		</div>
+	</div>
+	<br>
+</p>
+{% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		
+		{% if title %}
+			{{title}}
+		{% else %}
+			Blog-IT : Write Everything
+		{% endif %}
+	</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'post/style.css' %}">
+</head>
+<body>
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark nav_custom">
+	  <ul class="navbar-nav">
+	    <li class="nav-item active">
+	      <a class="nav-link" href="{% url 'post:post-home' %}">Blog-IT : Write Everythin Out</a>
+	    </li>
+	    {% if user.is_authenticated %}
+	    <li class="nav-item float_right">
+	     	 <a class="nav-link" href="{% url 'post:post-create' %}">Create Blog</a> 
+		</li>
+	    <li class="nav-item float_right">
+	     	 <a class="nav-link" href="{% url 'account:account-profile' user.id%}">Profile</a> 
+		</li>
+	    <li class="nav-item ">
+	    	<a class="nav-link" href="{% url 'account:logout' %}">Logout</a>
+	    </li>
+
+	    {% else %}
+
+	    <li class="nav-item ">
+	    	<a class="nav-link" href="{% url 'account:register' %}">Register</a>
+	    </li>
+	    <li class="nav-item ">
+	    	<a class="nav-link" href="{% url 'account:login' %}">Login</a>
+	    </li>
+
+	    {% endif %}
+	  </ul>
+	</nav>
+
+	<div class="jumbotron no_margin">
+		<div class="container">
+			{% block content %}
+
+			{% endblock content %}
+		</div>	
+	</div>
+ <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script></script>
+	
+
+	<!-- Footer Section -->
+
+	<div class="jumbotron footer_custom no_margin">
+		<div class="container color_white">
+			<div class="row">
+				<div class="col-md-4">
+					Links:<br>
+					<a href="">Pinned Posts</a><br>
+					<a href="">Top posts</a><br>
+					<a href="">About Us</a><br>
+					<a href="">Contact</a><br>
+					Mail @ : binish784@hotmail.com<br>
+
+				</div>
+				<div class="col-md-4 align_center">
+					<br>
+					<h2>B-l-o-g--I-T</h2>
+					Write and Share<br>
+					Blogs
+					<br><br>
+				</div>
+				<div class="col-md-4 color_khaki">
+					This is an demo django blog page created on Feb. 3rd, 2019.<br>
+					The page is still under development hence some of the features here are not finished. Anyway enjoy the page and hope you like what i created. Any recommendations are Heartly accepted.
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	{% block Script%}	{% endblock Script%}
+	
+	
+
+</body>
+</html>

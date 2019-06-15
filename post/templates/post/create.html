@@ -1,0 +1,14 @@
+{% extends 'post/base.html' %}
+
+{% load  crispy_forms_tags %}
+
+{% block content %}
+
+
+
+<form action="" method="POST" enctype="multipart/form-data"  style="border-left: 1.5px solid #007bff;padding-left: 20px;">
+	{% crispy form %}<br>
+</form>
+
+{% endblock content %}
+
